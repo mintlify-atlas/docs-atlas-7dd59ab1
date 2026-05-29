@@ -1,0 +1,205 @@
+---
+title: "Arquitectura CSS: estilos globales y hojas de estilo por página"
+sidebarTitle: "Arquitectura CSS"
+description: "Cómo está organizado el CSS del sitio — un archivo global con tokens y layout compartido, y hojas de estilo específicas por cada página."
+---
+
+El proyecto organiza los estilos en **dos capas complementarias**: un archivo compartido (`styles.css`) que define los design tokens, el header, el footer y el layout base que se repite en todas las páginas, y una hoja de estilo dedicada por cada subpágina que contiene únicamente los estilos propios de ese contenido. Esta separación evita la duplicación de reglas comunes y mantiene cada archivo enfocado en una sola responsabilidad.
+
+## Organización de archivos CSS
+
+| Archivo | Propósito |
+|---|---|
+| `css/styles.css` | Tokens globales, header, footer, layout base (índice) |
+| `css/nosotros.css` | Estilos de la página Nosotros |
+| `css/noticias.css` | Estilos de la página Noticias |
+| `css/recursos.css` | Estilos de la página Recursos y Contacto |
+| `css/contacto.css` | Estilos adicionales de la página Contacto |
+
+## Estrategia de carga
+
+Cada página carga primero `styles.css` para garantizar que los tokens y los componentes compartidos (header, footer) estén disponibles antes de aplicar los estilos específicos. La página de inicio solo necesita `styles.css`, mientras que el resto de las páginas encadena su hoja propia inmediatamente después.
+
+<CodeGroup>
+
+```html index.html
+<!-- * — Configuración visual base -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/styles.css" />
+```
+
+```html pages/nosotros.html
+<!-- * — Configuración visual base -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/nosotros.css" />
+```
+
+</CodeGroup>
+
+## Clases CSS principales en styles.css
+
+### Header
+
+El header usa Flexbox con `justify-content: space-between` para distribuir el logo, la navegación y el buscador en los extremos. `.izquierda` agrupa el logo y el nav, mientras que `.busqueda` queda anclado al extremo derecho.
+
+```css
+header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  gap: 2rem;
+  border-bottom: 1px solid var(--text-secondary);
+}
+
+header .izquierda {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: center;
+}
+
+header .links_navegacion {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+header .links_navegacion a {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+header .links_navegacion a:hover {
+  color: var(--primary-hover);
+}
+```
+
+### Buscador del header
+
+El buscador es un componente visual con estilos aislados, preparado para conectarse a JavaScript sin necesidad de modificar el header.
+
+```css
+.busqueda {
+  font-family: var(--font-primary);
+  background-color: var(--background-dark);
+  display: flex;
+  border-radius: 100px;
+  position: relative;
+  align-items: center;
+  margin-right: 2rem;
+  overflow: hidden;
+}
+
+.busqueda:focus-within {
+  outline: 2px solid var(--primary-alt);
+}
+```
+
+### Botones globales
+
+Los botones primario y secundario están definidos en `styles.css` como clases reutilizables en todo el sitio.
+
+```css
+.boton-primario {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: bolder;
+  font-family: var(--font-primary);
+  background-color: var(--primary-color);
+  color: var(--text-secondary);
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+}
+
+.boton-primario:hover {
+  background-color: var(--primary-hover);
+}
+
+.boton-secundario {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  gap: 0.5rem;
+  font-family: var(--font-primary);
+  background-color: var(--primary-light-transparent);
+  color: var(--text-secondary);
+  border: 1px solid var(--primary-soft-border);
+  padding: 15px 30px;
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+}
+```
+
+### Footer
+
+El footer usa CSS Grid con columnas proporcionales (`3fr 2fr 1fr`) para distribuir la identidad institucional, los links rápidos y las redes sociales.
+
+```css
+footer {
+  padding: 50px 100px;
+}
+
+footer .principal_footer {
+  background-color: var(--background);
+  align-items: start;
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr;
+  gap: 100px;
+}
+
+.botones_footer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.redes_footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+```
+
+## Secciones del sitio documentadas en styles.css
+
+<Note>
+El CSS del proyecto utiliza el patrón de comentarios `/* * === */` para delimitar secciones principales dentro de cada archivo. Esto permite navegar rápidamente por el código y distinguir componentes reutilizables de contenido específico de página.
+
+Las secciones principales definidas en `styles.css` son:
+
+- **TOKENS GLOBALES** — Variables CSS de color y tipografía compartidas
+- **HEADER** — Layout reutilizable de logo, navegación y buscador
+- **HERO INSTITUCIONAL** — Presentación inicial con CTA principal (`.inicio`, `.card_inicio`)
+- **ACCESOS RÁPIDOS** — Grid de tarjetas de acceso rápido (`.accesos`, `.card_rapido`)
+- **NOTICIAS** — Cards de noticias en grid (`.ult_noticias`, `.card_noticias`)
+- **RESUMEN INSTITUCIONAL** — Bloque de confianza con imagen y misión/visión (`.info_col_basic`)
+- **FOOTER** — Componente común con identidad, links y redes sociales
+- **RESPONSIVE** — Media queries por breakpoint (`1024px` tablet, `768px` mobile)
+</Note>

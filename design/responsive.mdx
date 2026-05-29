@@ -1,0 +1,280 @@
+---
+title: "Diseño responsive: breakpoints, Flexbox y CSS Grid"
+sidebarTitle: "Responsive"
+description: "Estrategia de diseño responsive del sitio — media queries, técnicas Flexbox y Grid, y los cuatro breakpoints que cubren móvil, tablet y escritorio."
+---
+
+El sitio es **completamente responsive**, construido desde cero con Flexbox y CSS Grid, sin depender de ningún framework CSS externo como Bootstrap o Tailwind. El layout se adapta a cuatro rangos de pantalla —móvil pequeño, móvil, tablet y escritorio— utilizando media queries basadas en `max-width`. Todos los ajustes responsive se declaran al final de cada hoja de estilo, separados del resto del CSS por comentarios de sección.
+
+## Técnicas de layout utilizadas
+
+<CardGroup cols={2}>
+  <Card title="Flexbox" icon="arrows-left-right">
+    Usado para el layout del header (logo + navegación + buscador), filas de botones, agrupaciones de metadatos en cards (`.info`, `.botones_accion`, `.izquierda`) y columnas del footer. Permite alinear y distribuir elementos en una sola dirección con control preciso del espaciado.
+  </Card>
+  <Card title="CSS Grid" icon="table-cells">
+    Usado para grids de cards de noticias (`.ult_noticias`), grids de acceso rápido (`.accesos`), el layout principal de dos columnas en páginas internas (`.contenido_noticias`, `.content`, `.principal_cont`) y la estructura del footer (`.principal_footer`). Permite definir columnas proporcionales y reorganizarlas en media queries con una sola propiedad.
+  </Card>
+  <Card title="CSS Custom Properties" icon="sliders">
+    Los design tokens de color y tipografía definidos en `:root` garantizan que los colores, tipografías y radios de borde sean consistentes en todos los breakpoints sin duplicar valores.
+  </Card>
+  <Card title="Media Queries" icon="mobile">
+    Cuatro breakpoints declarados con `max-width` en cada hoja de estilo. Los estilos base apuntan a escritorio (desktop-first en la práctica), y las media queries sobrescriben layout, tipografía y espaciado para pantallas más pequeñas.
+  </Card>
+</CardGroup>
+
+## Breakpoints
+
+Los breakpoints son consistentes en todos los archivos CSS del proyecto. Cada hoja de estilo por página replica el mismo esquema de breakpoints para header y footer (componentes compartidos), y agrega los ajustes específicos de su contenido.
+
+| Breakpoint | Ancho máximo | Descripción |
+|---|---|---|
+| Tablet | `1024px` | Layouts de dos columnas se mantienen o reducen gap; footer pasa de `3fr 2fr 1fr` a `1fr 1fr` |
+| Mobile | `768px` | Grids de contenido pasan a una columna; header se apila verticalmente; footer a columna única |
+| Mobile pequeño | `480px` | Ajustes tipográficos adicionales (reducción de `font-size` en títulos) para pantallas muy angostas |
+
+<Note>
+El archivo `contacto.css` solo define media queries para `768px` (mobile), ya que es la única página donde el único breakpoint necesario era el de una columna. Las demás páginas usan los tres breakpoints completos: `1024px`, `768px` y `480px`.
+</Note>
+
+## Flexbox en el header
+
+El header es el componente compartido más representativo del uso de Flexbox. Usa `justify-content: space-between` para empujar el logo/nav al lado izquierdo y el buscador al extremo derecho. En tablet el nav se convierte en una segunda fila con `flex-wrap: wrap`, y en mobile el logo reduce su tamaño y los links de navegación se reorganizan.
+
+```css
+/* — Desktop: distribución horizontal completa */
+header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  gap: 2rem;
+  border-bottom: 1px solid var(--text-secondary);
+}
+
+header .izquierda {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: center;
+}
+
+header .links_navegacion {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+}
+```
+
+## Menú hamburguesa mobile
+
+<Note>
+El sitio no implementa un menú hamburguesa con JavaScript en esta versión. La navegación mobile se adapta mediante media queries: en `max-width: 1024px` el nav ocupa el ancho completo de una segunda fila (`width: 100%; justify-content: center`), y en `max-width: 768px` los links se reducen en tamaño y gap, y admiten salto de línea con `flex-wrap: wrap`. Esta estrategia mantiene todos los enlaces visibles sin ocultar el nav.
+
+```css
+/* — Tablet (≤ 1024px): nav en segunda fila centrado */
+@media (max-width: 1024px) {
+  header {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  header nav {
+    width: 100%;
+    justify-content: center;
+  }
+
+  header .links_navegacion {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+}
+
+/* — Mobile (≤ 768px): logo y texto reducidos */
+@media (max-width: 768px) {
+  header .izquierda {
+    gap: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    height: 40px;
+    margin-left: 0;
+  }
+
+  .links_navegacion {
+    font-size: 0.9rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .busqueda input[type="search"] {
+    width: 120px;
+    font-size: 0.9rem;
+  }
+}
+```
+</Note>
+
+## Ejemplo de grid responsivo
+
+### Grid de accesos rápidos (página de inicio)
+
+El grid de cuatro columnas de accesos rápidos en `styles.css` pasa por tres estados según el breakpoint:
+
+```css
+/* — Desktop: 4 columnas iguales */
+.accesos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 70px;
+}
+
+/* — Tablet (≤ 1024px): 2 columnas */
+@media (max-width: 1024px) {
+  .accesos {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 40px;
+  }
+}
+
+/* — Mobile (≤ 768px): 1 columna */
+@media (max-width: 768px) {
+  .accesos {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .card_rapido {
+    width: 100%;
+    height: auto;
+    padding: 2rem;
+  }
+}
+```
+
+### Grid de noticias en la página de inicio
+
+```css
+/* — Desktop: 3 columnas */
+.ult_noticias {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 55px;
+}
+
+/* — Tablet (≤ 1024px): 2 columnas */
+@media (max-width: 1024px) {
+  .ult_noticias {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 2rem;
+  }
+}
+
+/* — Mobile (≤ 768px): 1 columna */
+@media (max-width: 768px) {
+  .ult_noticias {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+```
+
+### Grid principal de páginas internas (noticias, recursos)
+
+Las páginas internas usan un grid `2fr 1fr` que separa el contenido principal de la columna lateral. En tablet y mobile ambas columnas pasan a una sola:
+
+```css
+/* — noticias.css: Desktop — contenido principal + columna lateral */
+.contenido_noticias {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 2rem;
+}
+
+/* — recursos.css: Desktop — contenido + sidebar */
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 70px;
+}
+
+/* — Tablet (≤ 1024px): columna única */
+@media (max-width: 1024px) {
+  .contenido_noticias {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+```
+
+### Grid del footer
+
+```css
+/* — Desktop: 3 columnas proporcionales */
+footer .principal_footer {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr;
+  gap: 100px;
+}
+
+/* — Tablet (≤ 1024px): 2 columnas iguales */
+@media (max-width: 1024px) {
+  footer .principal_footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+/* — Mobile (≤ 768px): 1 columna */
+@media (max-width: 768px) {
+  footer .principal_footer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  footer {
+    padding: 40px 20px;
+  }
+}
+```
+
+## Pruebas en dispositivos
+
+<Tip>
+El sitio fue diseñado y validado para los siguientes cuatro rangos de pantalla:
+
+- 📱 **Móviles pequeños** — hasta `480px` (iPhone SE, Galaxy A series)
+- 📱 **Móviles** — hasta `768px` (iPhone 14, Pixel, Galaxy S series)
+- 💻 **Tablets** — hasta `1024px` (iPad, tablets Android)
+- 🖥 **Laptops y escritorio** — por encima de `1024px`
+
+Para probar el comportamiento responsive sin un dispositivo físico, usa la herramienta **DevTools** de Chrome o Firefox: abre las herramientas de desarrollo (`F12`), activa el modo de dispositivo con `Ctrl + Shift + M` y selecciona un preset de dispositivo o arrastra el ancho manualmente para verificar los cambios de layout en cada breakpoint.
+</Tip>

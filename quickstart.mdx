@@ -1,47 +1,172 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Empieza a trabajar con el proyecto en 3 pasos"
+sidebarTitle: "Quickstart"
+description: "Clona el repositorio, abre el sitio en tu navegador y empieza a explorar o contribuir al rediseño de la IEM Emilio Cifuentes."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+Una de las ventajas de este proyecto es su **simpleza de configuración**: no requiere herramientas de build, ni gestor de paquetes, ni servidor local obligatorio. Basta con clonar el repositorio y abrir `index.html` en cualquier navegador moderno para ver el sitio funcionando de inmediato. Esto lo hace accesible tanto para colaboradores experimentados como para quienes recién se inician en el desarrollo web.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+---
 
-## Prerequisites
+## Prerrequisitos
 
-Before you begin, you must have:
+<Note>
+  Antes de comenzar, asegúrate de tener instalado lo siguiente en tu equipo:
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+  - **Un navegador web moderno** — Chrome, Firefox, Safari o Edge en su versión reciente.
+  - **Git** — para clonar el repositorio desde GitHub. Puedes descargarlo en [git-scm.com](https://git-scm.com).
+  - **Un editor de código** — se recomienda [Visual Studio Code](https://code.visualstudio.com/) con la extensión **Better Comments** para visualizar correctamente el estándar de comentarios del proyecto.
+</Note>
 
-## Get started
+---
+
+## Pasos
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Clona el repositorio">
+    Abre una terminal y ejecuta los siguientes comandos para obtener una copia local del proyecto:
 
     ```bash
-    npm install your-package
+    git clone https://github.com/g4lvan/demo_page_colegio.github.io.git
+    cd demo_page_colegio.github.io
     ```
+
+    Esto descargará todos los archivos del proyecto en tu máquina y te posicionará dentro de la carpeta raíz.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
 
-    ```bash
-    your-cli init
+  <Step title="Abre el sitio en el navegador">
+    No es necesario ningún paso de compilación ni instalación de dependencias. El proyecto funciona directamente con archivos estáticos.
+
+    Una vez dentro de la carpeta, verás la siguiente estructura de entrada:
+
     ```
+    demo_page_colegio.github.io/
+    ├── index.html        ← Página principal (Inicio)
+    └── pages/
+        ├── nosotros.html
+        ├── noticias.html
+        ├── recursos.html
+        └── contacto.html
+    ```
+
+    Tienes dos opciones para visualizarlo:
+
+    - **Doble clic en `index.html`** — el navegador lo abrirá directamente con el protocolo `file://`.
+    - **VS Code + Live Server** — instala la extensión [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), haz clic derecho sobre `index.html` y selecciona _"Open with Live Server"_. Esta opción recarga el navegador automáticamente al guardar cambios.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
 
-    ```bash
-    your-cli start
+  <Step title="Explora las páginas">
+    El sitio cuenta con **cinco páginas** accesibles desde la barra de navegación principal:
+
+    | Página | Archivo |
+    |---|---|
+    | Inicio | `index.html` |
+    | Nosotros | `pages/nosotros.html` |
+    | Noticias | `pages/noticias.html` |
+    | Recursos | `pages/recursos.html` |
+    | Contacto | `pages/contacto.html` |
+
+    Cada página tiene su propio archivo CSS en la carpeta `css/` y comparte los estilos globales definidos en `css/styles.css`, donde encontrarás los tokens de diseño (colores, tipografía y espaciados) declarados en `:root`.
+  </Step>
+
+  <Step title="Configura tu editor (opcional)">
+    El proyecto utiliza un **estándar de comentarios** con etiquetas especiales (`*`, `?`, `!`, `'`) que indican distintos tipos de anotación en el código. Para visualizarlos con colores diferenciados en VS Code, instala la extensión **Better Comments** y agrega la siguiente configuración a tu archivo `settings.json`:
+
+    ```json
+    {
+      "better-comments.tags": [
+        {
+          "tag": "*",
+          "color": "#2ecc71",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": true,
+          "italic": false
+        },
+        {
+          "tag": "?",
+          "color": "#3498db",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": false,
+          "italic": true
+        },
+        {
+          "tag": "!",
+          "color": "#e74c3c",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": true,
+          "italic": false
+        },
+        {
+          "tag": "'",
+          "color": "#f39c12",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": false,
+          "italic": true
+        }
+      ]
+    }
     ```
+
+    Con esto, los comentarios del proyecto se mostrarán con colores que facilitan la lectura y comprensión del código fuente.
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+---
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+## Estructura de carpetas
+
+```
+demo_page_colegio.github.io/
+├── index.html
+├── pages/
+│   ├── nosotros.html
+│   ├── noticias.html
+│   ├── recursos.html
+│   └── contacto.html
+├── css/
+│   ├── styles.css
+│   ├── nosotros.css
+│   ├── noticias.css
+│   ├── recursos.css
+│   └── contacto.css
+├── js/
+│   └── script.js
+├── assets/
+│   ├── images/
+│   ├── logos/
+│   ├── video/
+│   └── downloads/
+└── docs/
+    ├── COMMIT_STANDARD.md
+    ├── COMMENTING_STANDARD.md
+    └── structure.md
+```
+
+---
+
+## Próximos pasos
+
+Una vez que tienes el proyecto corriendo en tu entorno local, puedes profundizar en cualquiera de estas áreas:
+
+<CardGroup cols={2}>
+  <Card title="Estructura del Sitio" icon="folder-open" href="site/overview">
+    Conoce en detalle cómo está organizado cada archivo HTML, qué secciones componen cada página y cómo se relacionan entre sí.
+  </Card>
+  <Card title="Arquitectura CSS" icon="palette" href="design/css-architecture">
+    Explora el sistema de tokens de diseño, la organización de los archivos CSS por página y el uso de Flexbox y Grid en el layout.
+  </Card>
+  <Card title="Guía de Commits" icon="code-branch" href="contributing/commit-standard">
+    Aprende el estándar de commits del proyecto para mantener un historial de cambios claro, consistente y fácil de navegar.
+  </Card>
+  <Card title="Roadmap" icon="map" href="contributing/roadmap">
+    Revisa el plan de versiones del proyecto: desde el MVP actual hasta las funcionalidades previstas en v1.0, v2.0 y v3.0.
+  </Card>
+</CardGroup>

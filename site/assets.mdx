@@ -1,0 +1,92 @@
+---
+title: "Assets institucionales: imágenes, logos, video y documentos"
+sidebarTitle: "Assets"
+description: "Inventario de los recursos estáticos del sitio — fotografías, el logo SVG, el video de introducción y los documentos PDF descargables."
+---
+
+La carpeta `assets/` agrupa todos los recursos estáticos del sitio organizados por tipo en cuatro subcarpetas: `images/`, `logos/`, `video/` y `downloads/`. Ninguno de estos archivos pasa por una herramienta de compilación ni procesamiento automático — el HTML los referencia directamente mediante rutas relativas. Esto significa que mover o renombrar cualquier archivo requiere actualizar manualmente todas las referencias en el HTML.
+
+## Logos
+
+La identidad visual de la institución se sirve desde `assets/logos/` en dos formatos:
+
+| Archivo | Formato | Uso |
+|---|---|---|
+| `assets/logos/EMILIO.png` | PNG | Logo usado en el `<header>` y `<footer>` de todas las páginas, y como favicon del sitio |
+| `assets/logos/EMILIO.svg` | SVG | Versión vectorial recomendada para contextos donde se requiera escalabilidad sin pérdida de calidad |
+
+El logo PNG se referencia en el header de cada página de la siguiente manera:
+
+```html
+<img src="../assets/logos/EMILIO.png" alt="Logo de la institución" class="logo" />
+```
+
+Desde la raíz (`index.html`) la ruta no lleva el prefijo `../`:
+
+```html
+<img src="assets/logos/EMILIO.png" alt="Logo de la institución" class="logo" />
+```
+
+El mismo archivo se usa como favicon mediante:
+
+```html
+<link rel="shortcut icon" href="assets/logos/EMILIO.png" type="image/x-icon" />
+```
+
+## Imágenes
+
+Las fotografías institucionales se almacenan en `assets/images/` y se referencian directamente en el HTML. A continuación se describe cada archivo y el contexto en que se usa:
+
+| Archivo | Contexto de uso |
+|---|---|
+| `Home-e1676317083249.jpeg` | Imagen principal de la sección *Resumen Institucional* en `index.html` y como poster del reproductor de video en `nosotros.html` |
+| `pizarra_web.jpg` | Fotografía de la tarjeta de noticia *¡Estudiante va a las Olimpiadas Matemáticas!* — muestra a un estudiante en una actividad matemática |
+| `590406859_1405269001601102_3354321450507024463_n.jpg` | Fotografía de la tarjeta de noticia *¡Celebramos la graduación de grado 11!* — ceremonia de graduación 2025. **Nota:** nombre generado automáticamente por red social; debe renombrarse antes de producción |
+| `590553817_1405267334934602_5608521336583137333_n.jpg` | Fotografía de la tarjeta de noticia *Reencuentro de la promoción 1965* — encuentro de exalumnos. **Nota:** nombre generado automáticamente por red social; debe renombrarse antes de producción |
+| `2000_5d893aa11d670.webp` | Imagen institucional adicional en formato WebP |
+
+## Video
+
+`assets/video/Introduction_video.mp4` es el video institucional de presentación de la institución. Se usa en la sección `.history` de `pages/nosotros.html` dentro de un elemento `<video>` nativo con los siguientes atributos:
+
+- `controls` — muestra la barra de controles del navegador
+- `preload="metadata"` — carga solo los metadatos (duración, dimensiones) al inicio, evitando descargar el archivo completo antes de que el usuario lo reproduzca
+- `playsinline` — permite la reproducción en línea en dispositivos iOS sin forzar pantalla completa
+- `poster` — muestra la imagen `Home-e1676317083249.jpeg` mientras el video no se ha reproducido
+
+```html
+<video
+  controls
+  preload="metadata"
+  playsinline
+  poster="../assets/images/Home-e1676317083249.jpeg"
+>
+  <source src="../assets/video/Introduction_video.mp4" type="video/mp4" />
+  Tu navegador no soporta la reproducción de videos.
+</video>
+```
+
+El texto de fallback `Tu navegador no soporta la reproducción de videos.` se muestra únicamente en navegadores que no entienden el elemento `<video>`, lo cual es extremadamente raro en 2026 pero sigue siendo una buena práctica de accesibilidad.
+
+## Documentos descargables
+
+`assets/downloads/` contiene cuatro documentos PDF institucionales que se enlazan desde la sección *Descargas Rápidas* de `pages/recursos.html` usando el atributo `download` para forzar la descarga del archivo en lugar de abrirlo en el navegador:
+
+| Archivo | Descripción |
+|---|---|
+| `CIRCULAR-A-PADRES-20250210.pdf` | Circular dirigida a padres de familia, fechada el 10 de febrero de 2025 |
+| `Circular-interna-01.pdf` | Circular interna institucional número 01 |
+| `FORMATO-DE-EXCUSA-2026.pdf` | Formato oficial de excusa estudiantil vigente para el año 2026 |
+| `MANUAL-DE-CONVIVENCIA.pdf` | Manual de convivencia institucional 2023–2025 (1.82 MB) |
+
+Los cuatro archivos se referencian con rutas relativas desde `pages/recursos.html`:
+
+```html
+<a href="../assets/downloads/MANUAL-DE-CONVIVENCIA.pdf" download>
+  Manual De Convivencia 2023-2025
+</a>
+```
+
+<Tip>
+  Antes de pasar a producción, renombra los archivos de imagen cuyos nombres fueron generados automáticamente por redes sociales (`590406859_1405269001601102_3354321450507024463_n.jpg` y `590553817_1405267334934602_5608521336583137333_n.jpg`) a nombres semánticos en kebab-case, por ejemplo `graduacion-grado-11-2025.jpg` y `reencuentro-promocion-1965.jpg`. Los nombres descriptivos mejoran el SEO de imagen, facilitan el mantenimiento y hacen que los mensajes de error sean comprensibles cuando un archivo no se encuentra.
+</Tip>

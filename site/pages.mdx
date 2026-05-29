@@ -1,0 +1,180 @@
+---
+title: "Las cinco páginas del sitio: estructura y secciones"
+sidebarTitle: "Páginas HTML"
+description: "Descripción detallada de cada página HTML del sitio — secciones, componentes reutilizables y el patrón de header/footer compartido."
+---
+
+El sitio está compuesto por cinco páginas HTML: la página de inicio en la raíz del repositorio y cuatro páginas internas dentro de la carpeta `pages/`. Todas comparten la misma estructura de `<header>` y `<footer>`, lo que garantiza una identidad visual coherente y una navegación consistente en todo el sitio.
+
+## Patrón compartido: Header y Footer
+
+Cada página incluye un `<header>` idéntico compuesto por tres bloques: el logo institucional con el nombre de la institución dentro de un `<h1>`, la barra de navegación principal con cinco enlaces (`Inicio`, `Nosotros`, `Noticias`, `Contacto`, `Recursos`) y un buscador visual en el extremo derecho. El enlace activo de cada página apunta a `#` para señalar la página actual.
+
+El `<footer>` se divide en tres columnas: información institucional con logo y descripción, navegación secundaria con dos grupos de enlaces (*Recursos* y *Accesos Rápidos*) y un botón de red social que enlaza a la página oficial de Facebook de la institución.
+
+<Note>
+  El buscador del header es visual solamente — el `<form class="busqueda">` renderiza el campo de texto y el icono SVG, pero no tiene lógica JavaScript conectada. Está marcado en el código fuente con un comentario `! Buscador visual sin lógica JS conectada` y se integrará con búsqueda real en la versión 2.0 del sitio.
+</Note>
+
+## Página por página
+
+<AccordionGroup>
+  <Accordion title="index.html — Inicio">
+    La página principal concentra cuatro secciones que presentan la institución y guían al visitante hacia las áreas más relevantes del sitio.
+
+    **Hero — `.card_inicio`**
+    Tarjeta de presentación institucional con un badge de credencial (`EXCELENCIA EN EDUCACIÓN`), un titular principal (`Creando los Líderes del mañana`), un párrafo de bienvenida y dos botones de acción: un botón primario que enlaza a `pages/noticias.html` (`Ver Últimas Noticias`) y un botón secundario (`Inscripciones 2026`).
+
+    **Acceso Rápido — `.acceso_rapido`**
+    Cuatro tarjetas `.card_rapido` que enlazan a las secciones principales del sitio: *Noticias Escolares* → `pages/noticias.html`, *Calendario* (pendiente de ruta), *Recursos* (pendiente de ruta) y *Contáctenos* (pendiente de ruta). Cada tarjeta lleva un icono SVG de Tabler Icons, un `<h3>`, un párrafo descriptivo y un enlace con icono chevron.
+
+    **Últimas Noticias — `.noticias`**
+    Tres tarjetas `.card_noticias` con contenido hardcodeado que anticipa una fuente dinámica futura. Cada tarjeta incluye un badge de categoría posicionado sobre la imagen (`Logro Emilista`, `Evento Institucional`, `Comunidad Emilista`), la fotografía de la noticia, un `<time>` con la fecha, el titular en `<h3>`, el resumen en `<p>` y un enlace `Leer Artículo` (hrefs vacíos pendientes de páginas de detalle individuales).
+
+    **Resumen Institucional — `.info_col_basic`**
+    Bloque de doble columna: a la izquierda, una fotografía institucional con un badge superpuesto que indica `30+ Años de excelencia educativa`; a la derecha, el nombre de sección, un titular, un párrafo con la historia desde 1941 y el lema *SURSUM*, y dos artículos con la Visión y la Misión de la institución. Cierra con un enlace CTA `Aprende más sobre nosotros`.
+  </Accordion>
+
+  <Accordion title="pages/nosotros.html — Nosotros">
+    Página dedicada a la identidad, historia y equipo directivo de la institución. Se organiza en cuatro secciones fuera y dentro del `<main>`.
+
+    **Título — `.title`**
+    Banner de título de ancho completo (`Sobre Nosotros`) con un subtítulo institucional. Vive fuera del `<main>` deliberadamente para conservar el ancho completo sin heredar el padding lateral del contenedor principal.
+
+    **Introducción — `.introduction`**
+    Sección de dos columnas: a la izquierda (`.intr_der`) un bloque de texto con el subtítulo *Nuestra Esencia*, el titular *Introducción a la Excelencia Educativa* y un párrafo de presentación institucional. A la derecha (`.intr_izq`) cuatro tarjetas `.card_intr_izq`, cada una con un icono SVG, un `<h4>` y un `<p>`:
+    - **Excelencia Académica** — Educación enfocada en el aprendizaje y los valores
+    - **Talento Estudiantil** — Impulsamos las habilidades de nuestros estudiantes
+    - **Docentes Comprometidos** — Acompañamos el crecimiento académico y personal
+    - **Orgullo Emilista** — Historia, identidad y compromiso con la educación
+
+    **Historia — `.history`**
+    Reproductor de video institucional (`Introduction_video.mp4`) con atributos `controls`, `preload="metadata"`, `playsinline` y un poster con la imagen principal de la institución. Al lado, un bloque de texto con el subtítulo *Nuestra Historia*, un titular y un párrafo narrativo seguido de una lista de tres ítems que resumen los pilares institucionales.
+
+    **Equipo — `.team`**
+    Sección con encabezado institucional y tres tarjetas de directivo (`.person`), cada una con un icono de avatar SVG, el nombre y el cargo. Los tres integrantes actuales son:
+    - Coordinador 1 — Coordinador de Convivencia J.T
+    - Manuel Melo — Rector
+    - Coordinador 1 — Coordinador de Convivencia J.T
+
+    Un botón `Ver Listado Completo de Docentes` anticipa la ampliación del equipo en versiones futuras.
+  </Accordion>
+
+  <Accordion title="pages/noticias.html — Noticias">
+    Página de listado de noticias con búsqueda, filtros por categoría, grid de artículos, panel lateral de eventos próximos y formulario de suscripción.
+
+    **Encabezado — `.header_main`**
+    Bloque con el título `Noticias y Anuncios`, un subtítulo descriptivo y un formulario de búsqueda (`.buscador_noticias`) visual-only. Debajo, cinco botones de filtro por categoría: `Todos`, `Académico`, `Deportes`, `Eventos` y `Artes`. Los filtros son visuales y no tienen lógica de filtrado activa en la versión actual.
+
+    **Grid de noticias — `.noticias_izquierda`**
+    Tres tarjetas `.card_noticias` con el mismo contenido de la sección de noticias de inicio, adaptadas al layout de la página de noticias (el badge de categoría se mueve dentro de `.card_content` junto a la fecha). La paginación visual al pie (`.mas_noticias`) muestra páginas 1, 2, 3, `...` y 12 con flechas SVG; los links apuntan a `#`.
+
+    **Panel lateral — `.noticias_derecha`**
+    Dos widgets:
+    - **Próximos Eventos** (`.events`): cuatro tarjetas `.events_prox` con fecha compacta (mes + número), título del evento y ubicación/horario. El contenido es placeholder (`Evento Escolar — 1:00 PM - Aula Multiple`) pendiente de datos reales.
+    - **Actualización Semanal** (`.notif`): formulario de suscripción por correo con campo de email y botón `Suscribirse`. Marcado en código como visual sin backend conectado.
+  </Accordion>
+
+  <Accordion title="pages/recursos.html — Recursos">
+    Centro de recursos académicos y administrativos para estudiantes, padres y docentes.
+
+    **Encabezado — `.header_main`**
+    Título `Recursos Académicos` con subtítulo descriptivo.
+
+    **Tarjetas de acceso académico — `.cards_sections`**
+    Cuatro tarjetas `.card_info`, cada una con icono SVG, `<h2>`, párrafo descriptivo y enlace `Explorar cursos` con icono de flecha:
+    - **Currículo y Planes de Estudio** — esquemas de cursos con objetivos, contenidos y rúbricas
+    - **Asociación de Padres** — espacio de participación para padres de familia
+    - **Biblioteca Estudiantil** — acceso a libros y materiales de consulta
+    - **Información Académica** — informes de notas y horarios de atención
+
+    **Directorio administrativo — `.recursos_derecha`**
+    Panel lateral con dos bloques: el directorio de contactos del departamento (`.personal`) con cuatro tarjetas `.personal_der` —cada una muestra nombre, cargo y enlace `mailto:`— y un bloque de ayuda (`.help_recursos`) con botón `Contactar Soporte`.
+
+    **Sección inferior — `.info_mas`**
+    Dos artículos: una tarjeta de **Pruebas Estandarizadas** con descripción de los simulacros ICFES (Milton Ochoa, Tres Editores, Martes de Prueba) y enlace al calendario; y el bloque de **Descargas Rápidas** (`.descargas`) con cuatro archivos PDF enlazados directamente con el atributo `download`.
+  </Accordion>
+
+  <Accordion title="pages/contacto.html — Contacto">
+    Página de contacto institucional con formulario de mensaje, información de ubicación, directorio escolar y mapa embebido de Google Maps.
+
+    **Encabezado — `.header_main`**
+    Titular `Estamos para escucharte.` con la palabra clave resaltada mediante `.title_header` y un párrafo sobre comunicación abierta con la comunidad.
+
+    **Formulario de contacto — `.form_contact`**
+    `<form action="#" method="post">` con cuatro campos: nombre completo (`type="text"`), correo electrónico (`type="email"`), asunto (`<select>` con opciones: *Consultas de Admisión*, *Información sobre Eventos Escolares*, *Atención a Padres y Estudiantes*, *Información Académica*) y mensaje (`<textarea rows="10">`). El botón `Enviar Mensaje` usa `type="button"` —sin acción de envío real conectada— pendiente de integrar un backend o proveedor de formularios.
+
+    **Información de contacto — `.info_contact`**
+    Dirección física: `253051, Cl. 2 # 11-02, Facatativá, Cundinamarca`. Teléfono: `+57 311 262 0838`, atención Lun–Vie 6:00–12:00.
+
+    **Directorio escolar — `.der_directorio`**
+    Tres tarjetas `.personal_der` con nombre, cargo y enlace `mailto:` para cada integrante del equipo directivo.
+
+    **Mapa — `.map`**
+    `<iframe>` de Google Maps embebido con `loading="lazy"` apuntando a las coordenadas de la institución (`4.813395°N, 74.348565°W`). Acompañado de una `<figcaption>` con descripción de cómo llegar y enlace externo `Abrir en Google Maps` con `rel="noopener noreferrer"`.
+  </Accordion>
+</AccordionGroup>
+
+## Componentes reutilizables
+
+Los siguientes patrones de tarjeta se repiten a lo largo del sitio. Conocer su estructura de clases facilita extender el contenido o ajustar estilos sin romper el diseño existente.
+
+<CardGroup cols={2}>
+  <Card title=".card_rapido" icon="bolt">
+    Tarjeta de acceso rápido usada en la sección *Acceso Rápido* de inicio. Estructura: `<article class="card_rapido">` contiene un icono SVG (`.icon_acc_rapido`), un `<h3>` con el nombre de la sección, un `<p>` descriptivo y un `<a>` con texto de acción más un icono chevron (`.chev_acc_rapido`). Cuatro instancias en `index.html`.
+  </Card>
+  <Card title=".card_noticias" icon="newspaper">
+    Tarjeta de noticia compartida entre `index.html` y `noticias.html`. Estructura: `<article class="card_noticias">` con un bloque `.card_img` que contiene el badge de categoría (`.type_noti`) y la imagen; y un bloque `.card_content` con `.info` (icono calendario + `<time>`), `<h3>`, `<p>` resumen y enlace `Leer Artículo` (`.btn_card`).
+  </Card>
+  <Card title=".card_inicio" icon="house">
+    Tarjeta hero de la página de inicio. Estructura: `<article class="card_inicio">` con un `<div class="calificacion">` que actúa como badge de credencial, un `<h2>` con el titular principal, un `<p class="descripcion">` y un `<div class="botones">` con un botón primario (`.boton-primario`) y uno secundario (`.boton-secundario`).
+  </Card>
+  <Card title=".card_intr_izq" icon="star">
+    Tarjeta de característica institucional usada en la página Nosotros. Estructura: `<div class="card_intr_izq">` contiene un icono SVG (`.icon_intr_izq`), un `<h4>` con el nombre de la característica y un `<p>` con la descripción breve. Cuatro instancias dentro de la sección `.introduction`.
+  </Card>
+</CardGroup>
+
+## Meta tags SEO
+
+Solo la página de inicio (`index.html`) incluye el bloque completo de Open Graph y Twitter Card. Las páginas internas en `pages/` no repiten estas etiquetas en su versión actual.
+
+```html
+<!-- Open Graph para compartir enlaces -->
+<meta property="og:title" content="IEM Emilio Cifuentes" />
+<meta
+  property="og:description"
+  content="Conoce los servicios de la Institución Educativa Municipal Emilio Cifuentes de Facatativá. Un espacio digital moderno para toda la comunidad educativa."
+/>
+<meta
+  property="og:image"
+  content="https://g4lvan.github.io/demo_page_colegio.github.io/assets/images/Home-e1676317083249.jpeg"
+/>
+<meta
+  property="og:url"
+  content="https://g4lvan.github.io/demo_page_colegio.github.io/"
+/>
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_CO" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="IEM Emilio Cifuentes" />
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="IEM Emilio Cifuentes" />
+<meta
+  name="twitter:description"
+  content="Sitio web oficial de la Institución Educativa Municipal Emilio Cifuentes. Encuentra información académica, noticias, documentos y más."
+/>
+<meta
+  name="twitter:image"
+  content="https://g4lvan.github.io/demo_page_colegio.github.io/assets/images/Home-e1676317083249.jpeg"
+/>
+<meta
+  name="twitter:image:alt"
+  content="Institución Educativa Municipal Emilio Cifuentes - Facatativá"
+/>
+<meta name="twitter:creator" content="@g4lvan_" />
+```
+
+Para una cobertura completa de SEO social, se recomienda añadir etiquetas `og:title`, `og:description` y `og:url` específicas a cada página interior en futuras iteraciones.

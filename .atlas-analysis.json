@@ -1,0 +1,77 @@
+{
+  "projectType": "frontend",
+  "projectName": "IEM Emilio Cifuentes — Rediseño Web",
+  "projectDescription": "Modern, responsive redesign of the institutional website for Institución Educativa Municipal Emilio Cifuentes, built with vanilla HTML5 and CSS3.",
+  "theme": "willow",
+  "primaryColor": "#029642",
+  "lightColor": "#e5f4ec",
+  "darkColor": "#18583d",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Proyecto",
+        "groups": [
+          {
+            "group": "Introducción",
+            "pages": [
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Estructura del Sitio",
+            "pages": [
+              "site/overview",
+              "site/pages",
+              "site/assets"
+            ]
+          },
+          {
+            "group": "Estilos y Diseño",
+            "pages": [
+              "design/css-architecture",
+              "design/tokens",
+              "design/responsive"
+            ]
+          },
+          {
+            "group": "Contribución",
+            "pages": [
+              "contributing/commit-standard",
+              "contributing/commenting-standard",
+              "contributing/roadmap"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Fully responsive layout supporting mobile, tablet, and desktop breakpoints",
+    "Modern hero section with institutional branding and quick-access cards",
+    "News section with categorized article cards (Logro Emilista, Evento Institucional, Comunidad Emilista)",
+    "Dedicated pages: Home, Nosotros, Noticias, Recursos, Contacto",
+    "CSS custom properties (design tokens) for consistent color and typography",
+    "Flexbox and CSS Grid layouts throughout",
+    "Shared header/footer pattern across all pages",
+    "Institutional document downloads (circulares, manual de convivencia, formato de excusa)",
+    "Open Graph and Twitter Card meta tags for social sharing",
+    "Defined commit convention and Better Comments annotation standard"
+  ],
+  "publicApiSurface": [
+    "index.html — Home page (hero, quick-access, news, institutional summary)",
+    "pages/nosotros.html — About page (introduction, history, team)",
+    "pages/noticias.html — News & announcements listing",
+    "pages/recursos.html — Academic resources and document downloads",
+    "pages/contacto.html — Contact and administrative directory",
+    "css/styles.css — Global styles and shared design tokens",
+    "css/nosotros.css — About page styles",
+    "css/noticias.css — News page styles",
+    "css/recursos.css — Resources page styles",
+    "css/contacto.css — Contact page styles",
+    "js/script.js — JavaScript interactions",
+    "assets/downloads/ — Institutional PDF documents",
+    "assets/logos/EMILIO.svg — Institutional logo (SVG)",
+    "assets/video/Introduction_video.mp4 — Institutional intro video"
+  ]
+}

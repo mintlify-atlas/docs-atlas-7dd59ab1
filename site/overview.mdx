@@ -1,0 +1,76 @@
+---
+title: "Organización del proyecto: archivos, carpetas y convenciones"
+sidebarTitle: "Vista General"
+description: "Mapa completo del repositorio del sitio web de la IEM Emilio Cifuentes — carpetas, archivos principales y el rol de cada uno."
+---
+
+El repositorio del sitio de la **Institución Educativa Municipal Emilio Cifuentes** sigue una arquitectura plana de HTML5 y CSS3: no existe ningún sistema de compilación, empaquetador ni framework de JavaScript. Cada página es un archivo `.html` independiente que importa directamente sus hojas de estilo y referencia los assets por rutas relativas. Esto garantiza que cualquier desarrollador pueda abrir el proyecto y entenderlo sin instalar dependencias.
+
+## Árbol de archivos
+
+```plaintext
+demo_page_colegio.github.io/
+├── index.html              # Página principal
+├── pages/
+│   ├── nosotros.html       # Quiénes somos
+│   ├── noticias.html       # Noticias e información institucional
+│   ├── recursos.html       # Recursos y documentos descargables
+│   └── contacto.html       # Información de contacto
+├── css/
+│   ├── styles.css          # Estilos globales y design tokens
+│   ├── nosotros.css        # Estilos específicos de la página Nosotros
+│   ├── noticias.css        # Estilos específicos de Noticias
+│   ├── recursos.css        # Estilos específicos de Recursos
+│   └── contacto.css        # Estilos específicos de Contacto
+├── js/
+│   └── script.js           # Interacciones JavaScript
+├── assets/
+│   ├── images/             # Fotografías institucionales
+│   ├── logos/              # Logo SVG y PNG de la institución
+│   ├── video/              # Video institucional
+│   └── downloads/          # Documentos PDF descargables
+├── docs/
+│   ├── COMMIT_STANDARD.md  # Convención de commits
+│   ├── COMMENTING_STANDARD.md # Estándar de comentarios HTML
+│   └── structure.md        # Estructura del proyecto
+└── preview/
+    ├── antes.png           # Captura del sitio original
+    └── desktop-1.png       # Captura del rediseño
+```
+
+## Principios de organización
+
+- **Un CSS por página, más uno global.** Cada página tiene su propio archivo CSS (`nosotros.css`, `noticias.css`, `recursos.css`, `contacto.css`) que convive con el `styles.css` compartido. Esto mantiene el alcance de los estilos localizado y evita colisiones de selectores entre páginas.
+- **Sin framework de JavaScript.** Toda la interactividad del sitio se concentra en un único archivo `script.js`. No hay dependencias de npm ni librerías externas de JS — el objetivo es que el sitio funcione con solo abrir un archivo HTML en el navegador.
+- **Assets organizados por tipo.** La carpeta `assets/` se divide en cuatro subcarpetas con responsabilidades claras: `images/` para fotografías, `logos/` para la identidad visual, `video/` para el video institucional y `downloads/` para los documentos PDF descargables.
+- **`docs/` es para desarrolladores, no para usuarios finales.** Los archivos dentro de `docs/` documentan convenciones internas del proyecto (formato de commits, estándar de comentarios HTML, mapa de carpetas). No forman parte del sitio publicado.
+
+## Relación entre archivos CSS
+
+`styles.css` define los design tokens globales (colores, tipografía, espaciado), los estilos del `<header>` compartido y los estilos del `<footer>` compartido. Cada página de `pages/` importa ambos archivos en su `<head>`: primero `styles.css` para establecer la base, y después su CSS específico para añadir o sobrescribir únicamente lo que necesita esa vista.
+
+```html
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/nosotros.css" />
+```
+
+La página de inicio (`index.html`) referencia los CSS sin el prefijo `../` porque se encuentra en la raíz del repositorio:
+
+```html
+<link rel="stylesheet" href="css/styles.css" />
+```
+
+## Fuente tipográfica
+
+Todas las páginas cargan la familia **Nunito** desde Google Fonts. Para reducir la latencia de red, se declaran dos etiquetas `<link rel="preconnect">` antes de la hoja de estilo de Google Fonts, abriendo el handshake TLS con los servidores de fuentes antes de que el navegador procese la petición del CSS:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  rel="stylesheet"
+/>
+```
+
+El parámetro `display=swap` garantiza que el texto sea visible con una fuente de reserva mientras Nunito termina de descargarse, evitando el destello de texto invisible (FOIT).

@@ -1,0 +1,113 @@
+---
+title: "Roadmap del proyecto: de MVP a plataforma institucional completa"
+sidebarTitle: "Roadmap"
+description: "Plan de versiones del rediseño web de la IEM Emilio Cifuentes — desde el MVP actual hasta el sistema de gestión de contenido en v3.0."
+---
+
+El proyecto sigue un roadmap por fases que parte del MVP actual —un rediseño estático, responsive y semánticamente correcto— y avanza progresivamente hacia un sistema de gestión de contenido institucional completo. Cada fase agrega una capa de funcionalidad sobre la anterior, priorizando la estabilidad antes de la complejidad.
+
+---
+
+## Estado actual
+
+<Note>
+  El proyecto se encuentra actualmente en fase **MVP (Minimum Viable Product)**. Las fases v1.0, v2.0 y v3.0 están planificadas pero aún no iniciadas.
+</Note>
+
+---
+
+## Fases del roadmap
+
+<Steps>
+  <Step title="MVP (fase actual)">
+    Rediseño visual y estructural del sitio institucional desde cero.
+
+    - ✅ Rediseño visual del sitio
+    - ✅ Layout responsive (móvil, tablet, desktop)
+    - ✅ Organización de secciones con HTML semántico
+  </Step>
+
+  <Step title="v1.0">
+    Pulido y estabilización del diseño existente.
+
+    - Optimización de rendimiento
+    - Mejoras visuales
+    - Animaciones más fluidas
+  </Step>
+
+  <Step title="v2.0">
+    Incorporación de funcionalidades dinámicas.
+
+    - Sistema de noticias dinámico
+    - Calendario institucional
+    - Sistema de documentos
+  </Step>
+
+  <Step title="v3.0">
+    Panel de administración y gestión de contenido institucional.
+
+    - Panel de administración (CMS)
+    - Gestión de contenido institucional
+    - Posible sistema de usuarios
+  </Step>
+</Steps>
+
+---
+
+## Funcionalidades pendientes en MVP
+
+<Warning>
+  Las siguientes funcionalidades están presentes visualmente en el MVP pero **no están completamente implementadas**. No deben considerarse terminadas hasta que se resuelvan en la fase indicada:
+
+  - **Buscador:** la interfaz existe pero no tiene lógica JavaScript conectada. La funcionalidad completa está pendiente para v1.0.
+  - **Calendario académico:** es una card placeholder. No existe página de destino ni datos reales aún.
+  - **Detalles de noticias individuales:** los CTAs ("Leer más") están presentes en las cards, pero no hay páginas de detalle implementadas todavía.
+  - **Nombres de archivos de imágenes:** algunos archivos conservan nombres generados por redes sociales (ej. `590406859_...n.jpg`). Deben renombrarse siguiendo la convención `kebab-case` antes de pasar a producción, por razones de SEO y mantenimiento.
+</Warning>
+
+---
+
+## Tecnologías futuras consideradas
+
+<Info>
+  Las siguientes tecnologías están siendo evaluadas para fases posteriores del proyecto. **No son compromisos firmes**, sino opciones exploradas según las necesidades que surjan en cada fase:
+
+  - **Astro** — generador de sitios estáticos que permitiría componentizar el HTML actual con un overhead mínimo de JavaScript.
+  - **React** — para una arquitectura basada en componentes reutilizables si la complejidad de la UI lo justifica.
+  - **CMS** — para que personal no técnico de la institución pueda gestionar noticias, documentos y contenido sin tocar código.
+  - **Integración de calendario institucional** — conexión con un sistema de eventos o calendario académico real.
+</Info>
+
+---
+
+## Tipos de commit por fase
+
+Referencia para saber qué tipos de commit predominan en cada etapa del roadmap. Útil al revisar el historial de Git o al planear qué cambios corresponden a cada versión:
+
+| Fase | Tipos predominantes |
+|---|---|
+| **MVP** | `feat`, `contenido`, `estilo` |
+| **v1.0** | `fix`, `estilo`, `refactor` |
+| **v2.0** | `feat`, `config`, `js` |
+| **v3.0** | `feat`, `config`, `chore`, `docs` |
+
+---
+
+## ¿Cómo contribuir?
+
+<CardGroup cols={2}>
+  <Card
+    title="Estándar de commits"
+    icon="code-branch"
+    href="/contributing/commit-standard"
+  >
+    Tipos, alcances, reglas y ejemplos reales para mantener un historial de Git limpio.
+  </Card>
+  <Card
+    title="Estándar de comentarios"
+    icon="comment-code"
+    href="/contributing/commenting-standard"
+  >
+    Los 5 tipos de comentario HTML con Better Comments — cuándo y cómo usar cada uno.
+  </Card>
+</CardGroup>

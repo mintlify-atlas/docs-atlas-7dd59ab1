@@ -1,0 +1,135 @@
+---
+title: "Design tokens: variables CSS de color y tipografía"
+sidebarTitle: "Design Tokens"
+description: "Referencia completa de las custom properties CSS que definen la paleta de colores y la tipografía de la IEM Emilio Cifuentes."
+---
+
+El proyecto utiliza **CSS custom properties** (variables CSS) definidas en el selector `:root` de `styles.css` como sistema de design tokens. Todas las hojas de estilo por página (`nosotros.css`, `noticias.css`, `recursos.css`, `contacto.css`) replican este mismo bloque `:root` para garantizar que los tokens estén disponibles sin importar qué archivo CSS se cargue primero. Esto asegura coherencia visual de color y tipografía en las cinco páginas del sitio.
+
+## Definición completa de tokens
+
+El siguiente bloque es la definición canónica tal como aparece en `css/styles.css`:
+
+```css
+:root {
+  --primary-color: #029642;
+  --primary-alt: #1ba055;
+  --primary-soft-bg: #e5f4ec;
+  --primary-soft-border: #b8e2ca;
+  --primary-hover: #05bd55;
+  --primary-dark: #18583d;
+  --primary-light: #5c9d76;
+  --primary-light-transparent: #5c9d768f;
+  --placeholder: #a3d9bb;
+  --background: #ffffff;
+  --background-dark: #f5f6f7;
+  --background-secondary: #f1f5f9;
+  --complementary-color: #e2e8f0;
+  --text-primary: #000000;
+  --text-secondary: #ffffff;
+  --text-secondary-dark: #3d4147;
+  --text-muted: #798290;
+  --font-primary: "Nunito", sans-serif;
+}
+```
+
+<Note>
+Algunas hojas de estilo por página extienden el bloque `:root` con tokens adicionales específicos de ese contexto. Por ejemplo, `recursos.css` agrega `--pdf-color: #dc2626`, `--docx-color: #2563eb` y `--form-color: #7e4ca5` para distinguir tipos de archivo. `nosotros.css` y `contacto.css` agregan `--text-form: #747c74` y `--text-secondary-light: #b8e0c4` para formularios y textos de apoyo.
+</Note>
+
+## Paleta de colores
+
+### Familia de verdes institucionales
+
+| Token | Valor | Uso típico |
+|---|---|---|
+| `--primary-color` | `#029642` | Color verde institucional principal — botones primarios, enlaces activos, accents |
+| `--primary-alt` | `#1ba055` | Verde alternativo — variante del color principal en estados secundarios |
+| `--primary-soft-bg` | `#e5f4ec` | Fondo suave verde — fondos de cards, badges de fecha en eventos |
+| `--primary-soft-border` | `#b8e2ca` | Borde verde suave — bordes de elementos destacados, tarjetas de eventos |
+| `--primary-hover` | `#05bd55` | Verde hover — estado hover de enlaces, botones y elementos interactivos |
+| `--primary-dark` | `#18583d` | Verde oscuro — textos sobre fondos claros, encabezados con énfasis |
+| `--primary-light` | `#5c9d76` | Verde claro — elementos secundarios, estado hover del botón secundario |
+| `--primary-light-transparent` | `#5c9d768f` | Verde semitransparente — overlays, iconos de acceso rápido con blur |
+| `--placeholder` | `#a3d9bb` | Verde muy suave — placeholders de formularios, hover en paginación |
+
+### Fondos
+
+| Token | Valor | Uso típico |
+|---|---|---|
+| `--background` | `#ffffff` | Blanco — fondo base del sitio, cards principales |
+| `--background-dark` | `#f5f6f7` | Gris muy claro — secciones alternadas, fondo del header, inputs |
+| `--background-secondary` | `#f1f5f9` | Gris azulado claro — cards de archivos descargables, elementos secundarios |
+| `--complementary-color` | `#e2e8f0` | Gris complementario — bordes sutiles, divisores, sombras de cards |
+
+### Texto
+
+| Token | Valor | Uso típico |
+|---|---|---|
+| `--text-primary` | `#000000` | Negro — texto principal, títulos, enlaces de navegación |
+| `--text-secondary` | `#ffffff` | Blanco — texto sobre fondos oscuros o de color (hero, botones) |
+| `--text-secondary-dark` | `#3d4147` | Gris oscuro — texto secundario sobre fondo claro, descripciones |
+| `--text-muted` | `#798290` | Gris medio — texto terciario, metadatos, fechas, placeholders |
+
+## Tipografía
+
+El único token tipográfico del sistema es `--font-primary: "Nunito", sans-serif`. Nunito es cargada desde Google Fonts como fuente variable, con soporte completo del rango de pesos 200–1000 tanto en estilo normal como itálica.
+
+La importación usa `<link rel="preconnect">` para optimizar el tiempo de carga: el navegador establece la conexión con los servidores de Google Fonts antes de que el CSS solicite el archivo de la fuente.
+
+```html
+<!-- ? preconnect declarado antes del stylesheet de Google Fonts.
+     Reduce el handshake con el servidor de fuentes antes de descargar el CSS. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  rel="stylesheet"
+/>
+```
+
+El rango `wght@0,200..1000;1,200..1000` carga Nunito como **fuente variable**, lo que permite usar cualquier peso entre 200 y 1000 (normal e itálica) con una sola solicitud HTTP. En la práctica el sitio usa principalmente los pesos `700` (bold) y `900` (black) para títulos y énfasis.
+
+## Cómo usar los tokens
+
+Los tokens se consumen a través de la función `var()` de CSS. La sintaxis es la misma en cualquier archivo de la hoja de estilos:
+
+```css
+/* Usar el color principal en un botón */
+.boton-primario {
+  background-color: var(--primary-color);
+  color: var(--text-secondary);
+}
+
+/* Hover usando el token de hover */
+.boton-primario:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Card con fondo suave y borde institucional */
+.events_prox time {
+  background-color: var(--primary-soft-bg);
+  border: 2px solid var(--primary-soft-border);
+  color: var(--primary-color);
+}
+
+/* Texto atenuado para metadatos */
+.info time {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Tipografía base aplicada al body */
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+}
+```
+
+## Ventajas del sistema de tokens
+
+- **Punto único de cambio**: modificar el verde institucional en `:root` actualiza automáticamente botones, enlaces, badges e iconos en las cinco páginas del sitio.
+- **Nomenclatura semántica**: los tokens describen el *rol* del color (`--primary-hover`, `--text-muted`) y no el valor concreto, lo que facilita entender la intención de cada regla CSS sin mirar el valor hexadecimal.
+- **Base para modo oscuro**: la estructura de tokens está preparada para sobrescribir los valores en un bloque `@media (prefers-color-scheme: dark)` sin tocar las reglas de los componentes.
+- **Consistencia entre páginas**: las cinco páginas consumen exactamente los mismos tokens, garantizando que el mismo color de verde, el mismo gris de texto y la misma familia tipográfica aparezcan de forma idéntica en todo el sitio.
