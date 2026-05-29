@@ -1,7 +1,7 @@
 ---
-title: "Organización del proyecto: archivos, carpetas y convenciones"
+title: "Estructura del proyecto: carpetas, archivos y convenciones"
 sidebarTitle: "Vista General"
-description: "Mapa completo del repositorio del sitio web de la IEM Emilio Cifuentes — carpetas, archivos principales y el rol de cada uno."
+description: "Mapa completo del repositorio de la IEM Emilio Cifuentes — carpetas, archivos HTML, CSS, JS y assets estáticos con el rol de cada uno en el sitio web."
 ---
 
 El repositorio del sitio de la **Institución Educativa Municipal Emilio Cifuentes** sigue una arquitectura plana de HTML5 y CSS3: no existe ningún sistema de compilación, empaquetador ni framework de JavaScript. Cada página es un archivo `.html` independiente que importa directamente sus hojas de estilo y referencia los assets por rutas relativas. Esto garantiza que cualquier desarrollador pueda abrir el proyecto y entenderlo sin instalar dependencias.
@@ -35,7 +35,11 @@ demo_page_colegio.github.io/
 │   └── structure.md        # Estructura del proyecto
 └── preview/
     ├── antes.png           # Captura del sitio original
-    └── desktop-1.png       # Captura del rediseño
+    ├── desktop-1.png       # Captura del rediseño en escritorio
+    ├── desktop.png         # Vista de escritorio alternativa
+    ├── mobile.png          # Captura en vista móvil
+    ├── tablet.png          # Captura en vista tablet
+    └── responsive.gif      # Animación del diseño responsivo
 ```
 
 ## Principios de organización
@@ -47,7 +51,7 @@ demo_page_colegio.github.io/
 
 ## Relación entre archivos CSS
 
-`styles.css` define los design tokens globales (colores, tipografía, espaciado), los estilos del `<header>` compartido y los estilos del `<footer>` compartido. Cada página de `pages/` importa ambos archivos en su `<head>`: primero `styles.css` para establecer la base, y después su CSS específico para añadir o sobrescribir únicamente lo que necesita esa vista.
+`styles.css` define los design tokens globales (colores, tipografía, espaciado), los estilos del `<header>` compartido y los estilos del `<footer>` compartido. La mayoría de las páginas de `pages/` importan ambos archivos en su `<head>`: primero `styles.css` para establecer la base, y después su CSS específico para añadir o sobrescribir únicamente lo que necesita esa vista.
 
 ```html
 <link rel="stylesheet" href="../css/styles.css" />
@@ -59,6 +63,10 @@ La página de inicio (`index.html`) referencia los CSS sin el prefijo `../` porq
 ```html
 <link rel="stylesheet" href="css/styles.css" />
 ```
+
+<Note>
+  `pages/noticias.html` es la excepción: solo importa `../css/noticias.css` sin incluir `styles.css` como hoja de base separada. Todos los demás archivos de `pages/` siguen el patrón de doble importación.
+</Note>
 
 ## Fuente tipográfica
 

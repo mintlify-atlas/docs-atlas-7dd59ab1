@@ -1,10 +1,10 @@
 ---
 title: "Diseño responsive: breakpoints, Flexbox y CSS Grid"
 sidebarTitle: "Responsive"
-description: "Estrategia de diseño responsive del sitio — media queries, técnicas Flexbox y Grid, y los cuatro breakpoints que cubren móvil, tablet y escritorio."
+description: "Diseño responsive del sitio: media queries en 1024px, 768px y 480px para tablet, móvil y escritorio, con Flexbox y CSS Grid sin frameworks."
 ---
 
-El sitio es **completamente responsive**, construido desde cero con Flexbox y CSS Grid, sin depender de ningún framework CSS externo como Bootstrap o Tailwind. El layout se adapta a cuatro rangos de pantalla —móvil pequeño, móvil, tablet y escritorio— utilizando media queries basadas en `max-width`. Todos los ajustes responsive se declaran al final de cada hoja de estilo, separados del resto del CSS por comentarios de sección.
+El sitio es **completamente responsive**, construido desde cero con Flexbox y CSS Grid, sin depender de ningún framework CSS externo como Bootstrap o Tailwind. El layout se adapta a tres rangos de pantalla —tablet, móvil y móvil pequeño— utilizando media queries basadas en `max-width`. Todos los ajustes responsive se declaran al final de cada hoja de estilo, separados del resto del CSS por comentarios de sección. El archivo global `styles.css` cubre los breakpoints de `1024px` y `768px`; las hojas de subpágina añaden `480px` cuando sus contenidos lo requieren.
 
 ## Técnicas de layout utilizadas
 
@@ -19,7 +19,7 @@ El sitio es **completamente responsive**, construido desde cero con Flexbox y CS
     Los design tokens de color y tipografía definidos en `:root` garantizan que los colores, tipografías y radios de borde sean consistentes en todos los breakpoints sin duplicar valores.
   </Card>
   <Card title="Media Queries" icon="mobile">
-    Cuatro breakpoints declarados con `max-width` en cada hoja de estilo. Los estilos base apuntan a escritorio (desktop-first en la práctica), y las media queries sobrescriben layout, tipografía y espaciado para pantallas más pequeñas.
+    Breakpoints declarados con `max-width` al final de cada hoja de estilo. Los estilos base apuntan a escritorio (desktop-first en la práctica), y las media queries sobrescriben layout, tipografía y espaciado para pantallas más pequeñas. `styles.css` usa `1024px` y `768px`; las hojas de subpágina añaden `480px` cuando su contenido lo requiere.
   </Card>
 </CardGroup>
 
@@ -27,14 +27,14 @@ El sitio es **completamente responsive**, construido desde cero con Flexbox y CS
 
 Los breakpoints son consistentes en todos los archivos CSS del proyecto. Cada hoja de estilo por página replica el mismo esquema de breakpoints para header y footer (componentes compartidos), y agrega los ajustes específicos de su contenido.
 
-| Breakpoint | Ancho máximo | Descripción |
+| Breakpoint | Ancho máximo | Archivos que lo declaran |
 |---|---|---|
-| Tablet | `1024px` | Layouts de dos columnas se mantienen o reducen gap; footer pasa de `3fr 2fr 1fr` a `1fr 1fr` |
-| Mobile | `768px` | Grids de contenido pasan a una columna; header se apila verticalmente; footer a columna única |
-| Mobile pequeño | `480px` | Ajustes tipográficos adicionales (reducción de `font-size` en títulos) para pantallas muy angostas |
+| Tablet | `1024px` | `styles.css`, `nosotros.css`, `noticias.css`, `recursos.css` |
+| Mobile | `768px` | `styles.css`, `nosotros.css`, `noticias.css`, `recursos.css`, `contacto.css` |
+| Mobile pequeño | `480px` | `nosotros.css`, `noticias.css`, `recursos.css` |
 
 <Note>
-El archivo `contacto.css` solo define media queries para `768px` (mobile), ya que es la única página donde el único breakpoint necesario era el de una columna. Las demás páginas usan los tres breakpoints completos: `1024px`, `768px` y `480px`.
+`styles.css` solo declara media queries para `1024px` y `768px` — no incluye un breakpoint de `480px`. Los ajustes tipográficos para pantallas muy angostas (reducción de `font-size` en títulos) están definidos únicamente en las hojas de estilo de subpágina que los necesitan: `nosotros.css`, `noticias.css` y `recursos.css`. `contacto.css` tampoco declara `480px`; su único breakpoint es `768px`, donde el layout pasa a columna única.
 </Note>
 
 ## Flexbox en el header
@@ -127,7 +127,7 @@ El sitio no implementa un menú hamburguesa con JavaScript en esta versión. La 
     flex-wrap: wrap;
   }
 
-  .busqueda input[type="search"] {
+  input[type="search"] {
     width: 120px;
     font-size: 0.9rem;
   }
@@ -269,12 +269,12 @@ footer .principal_footer {
 ## Pruebas en dispositivos
 
 <Tip>
-El sitio fue diseñado y validado para los siguientes cuatro rangos de pantalla:
+El sitio fue diseñado y validado para los siguientes rangos de pantalla:
 
-- 📱 **Móviles pequeños** — hasta `480px` (iPhone SE, Galaxy A series)
-- 📱 **Móviles** — hasta `768px` (iPhone 14, Pixel, Galaxy S series)
-- 💻 **Tablets** — hasta `1024px` (iPad, tablets Android)
-- 🖥 **Laptops y escritorio** — por encima de `1024px`
+- 📱 **Móviles pequeños** — hasta `480px` (iPhone SE, Galaxy A series) — ajustes tipográficos en hojas de subpágina
+- 📱 **Móviles** — hasta `768px` (iPhone 14, Pixel, Galaxy S series) — columna única en todos los grids
+- 💻 **Tablets** — hasta `1024px` (iPad, tablets Android) — reducción de columnas en grids de contenido
+- 🖥 **Laptops y escritorio** — por encima de `1024px` — layout completo de escritorio
 
 Para probar el comportamiento responsive sin un dispositivo físico, usa la herramienta **DevTools** de Chrome o Firefox: abre las herramientas de desarrollo (`F12`), activa el modo de dispositivo con `Ctrl + Shift + M` y selecciona un preset de dispositivo o arrastra el ancho manualmente para verificar los cambios de layout en cada breakpoint.
 </Tip>

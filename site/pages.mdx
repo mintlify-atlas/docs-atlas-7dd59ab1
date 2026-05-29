@@ -23,7 +23,7 @@ El `<footer>` se divide en tres columnas: información institucional con logo y 
     La página principal concentra cuatro secciones que presentan la institución y guían al visitante hacia las áreas más relevantes del sitio.
 
     **Hero — `.card_inicio`**
-    Tarjeta de presentación institucional con un badge de credencial (`EXCELENCIA EN EDUCACIÓN`), un titular principal (`Creando los Líderes del mañana`), un párrafo de bienvenida y dos botones de acción: un botón primario que enlaza a `pages/noticias.html` (`Ver Últimas Noticias`) y un botón secundario (`Inscripciones 2026`).
+    Tarjeta de presentación institucional con un badge de credencial (`EXCELENCIA EN EDUCACIÓN`), un titular principal (`Creando los Lideres del mañana`), un párrafo de bienvenida y dos botones de acción: un botón primario que enlaza a `pages/noticias.html` (`Ver Ultimas Noticias`) y un botón secundario (`Inscripciones 2026`).
 
     **Acceso Rápido — `.acceso_rapido`**
     Cuatro tarjetas `.card_rapido` que enlazan a las secciones principales del sitio: *Noticias Escolares* → `pages/noticias.html`, *Calendario* (pendiente de ruta), *Recursos* (pendiente de ruta) y *Contáctenos* (pendiente de ruta). Cada tarjeta lleva un icono SVG de Tabler Icons, un `<h3>`, un párrafo descriptivo y un enlace con icono chevron.
@@ -42,7 +42,7 @@ El `<footer>` se divide en tres columnas: información institucional con logo y 
     Banner de título de ancho completo (`Sobre Nosotros`) con un subtítulo institucional. Vive fuera del `<main>` deliberadamente para conservar el ancho completo sin heredar el padding lateral del contenedor principal.
 
     **Introducción — `.introduction`**
-    Sección de dos columnas: a la izquierda (`.intr_der`) un bloque de texto con el subtítulo *Nuestra Esencia*, el titular *Introducción a la Excelencia Educativa* y un párrafo de presentación institucional. A la derecha (`.intr_izq`) cuatro tarjetas `.card_intr_izq`, cada una con un icono SVG, un `<h4>` y un `<p>`:
+    Sección de dos columnas: a la izquierda (`.intr_der`) un bloque de texto con el subtítulo *Nuestra Esencia*, el titular *Introducción a la Excelencia Educativa* y un párrafo de presentación institucional. A la derecha (`.intr_izq`) cuatro tarjetas `.card_intr_izq`, cada una con un icono SVG, un `<h4>` y un `<p>`. Nota: los nombres de clase `.intr_der` e `.intr_izq` están invertidos respecto a la posición visual — es una convención interna del proyecto que no debe cambiarse sin actualizar el CSS asociado.
     - **Excelencia Académica** — Educación enfocada en el aprendizaje y los valores
     - **Talento Estudiantil** — Impulsamos las habilidades de nuestros estudiantes
     - **Docentes Comprometidos** — Acompañamos el crecimiento académico y personal
@@ -89,7 +89,7 @@ El `<footer>` se divide en tres columnas: información institucional con logo y 
     - **Información Académica** — informes de notas y horarios de atención
 
     **Directorio administrativo — `.recursos_derecha`**
-    Panel lateral con dos bloques: el directorio de contactos del departamento (`.personal`) con cuatro tarjetas `.personal_der` —cada una muestra nombre, cargo y enlace `mailto:`— y un bloque de ayuda (`.help_recursos`) con botón `Contactar Soporte`.
+    Panel lateral con dos bloques: el directorio de contactos del departamento (`.personal`) con cuatro tarjetas `.personal_der` —cada una muestra nombre, cargo y enlace `mailto:`— y un bloque de ayuda (`.help_recursos`) con botón `Contactar Soporte`. El contenido de las cuatro tarjetas es actualmente placeholder (`Manuel Melo — Rector / rectoria@ejemplo.com`) pendiente de datos reales del equipo docente.
 
     **Sección inferior — `.info_mas`**
     Dos artículos: una tarjeta de **Pruebas Estandarizadas** con descripción de los simulacros ICFES (Milton Ochoa, Tres Editores, Martes de Prueba) y enlace al calendario; y el bloque de **Descargas Rápidas** (`.descargas`) con cuatro archivos PDF enlazados directamente con el atributo `download`.
@@ -105,10 +105,10 @@ El `<footer>` se divide en tres columnas: información institucional con logo y 
     `<form action="#" method="post">` con cuatro campos: nombre completo (`type="text"`), correo electrónico (`type="email"`), asunto (`<select>` con opciones: *Consultas de Admisión*, *Información sobre Eventos Escolares*, *Atención a Padres y Estudiantes*, *Información Académica*) y mensaje (`<textarea rows="10">`). El botón `Enviar Mensaje` usa `type="button"` —sin acción de envío real conectada— pendiente de integrar un backend o proveedor de formularios.
 
     **Información de contacto — `.info_contact`**
-    Dirección física: `253051, Cl. 2 # 11-02, Facatativá, Cundinamarca`. Teléfono: `+57 311 262 0838`, atención Lun–Vie 6:00–12:00.
+    Dirección física: `253051, Cl. 2 # 11- 02, Facatativá, Cundinamarca`. Teléfono: `+57 311 262 0838`, atención Lun–Vie 6:00–12:00.
 
     **Directorio escolar — `.der_directorio`**
-    Tres tarjetas `.personal_der` con nombre, cargo y enlace `mailto:` para cada integrante del equipo directivo.
+    Tres tarjetas `.personal_der` con nombre, cargo y enlace `mailto:` para cada integrante del equipo directivo. El contenido actual es placeholder (`Manuel Melo — Rector / rectoria@ejemplo.com` en las tres tarjetas) pendiente de completar con el equipo real.
 
     **Mapa — `.map`**
     `<iframe>` de Google Maps embebido con `loading="lazy"` apuntando a las coordenadas de la institución (`4.813395°N, 74.348565°W`). Acompañado de una `<figcaption>` con descripción de cómo llegar y enlace externo `Abrir en Google Maps` con `rel="noopener noreferrer"`.
@@ -158,6 +158,10 @@ Solo la página de inicio (`index.html`) incluye el bloque completo de Open Grap
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:site_name" content="IEM Emilio Cifuentes" />
+<meta
+  property="og:image:alt"
+  content="Institución Educativa Municipal Emilio Cifuentes - Facatativá"
+/>
 
 <!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary_large_image" />

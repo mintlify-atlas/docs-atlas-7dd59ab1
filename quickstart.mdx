@@ -1,7 +1,7 @@
 ---
-title: "Empieza a trabajar con el proyecto en 3 pasos"
+title: "Configuración local del proyecto IEM Emilio Cifuentes"
 sidebarTitle: "Quickstart"
-description: "Clona el repositorio, abre el sitio en tu navegador y empieza a explorar o contribuir al rediseño de la IEM Emilio Cifuentes."
+description: "Configura el proyecto IEM Emilio Cifuentes en minutos: clona el repositorio, abre el sitio en el navegador y prepara VS Code con Better Comments."
 ---
 
 Una de las ventajas de este proyecto es su **simpleza de configuración**: no requiere herramientas de build, ni gestor de paquetes, ni servidor local obligatorio. Basta con clonar el repositorio y abrir `index.html` en cualquier navegador moderno para ver el sitio funcionando de inmediato. Esto lo hace accesible tanto para colaboradores experimentados como para quienes recién se inician en el desarrollo web.
@@ -72,47 +72,14 @@ Una de las ventajas de este proyecto es su **simpleza de configuración**: no re
   <Step title="Configura tu editor (opcional)">
     El proyecto utiliza un **estándar de comentarios** con etiquetas especiales (`*`, `?`, `!`, `'`) que indican distintos tipos de anotación en el código. Para visualizarlos con colores diferenciados en VS Code, instala la extensión **Better Comments** y agrega la siguiente configuración a tu archivo `settings.json`:
 
-    ```json
-    {
-      "better-comments.tags": [
-        {
-          "tag": "*",
-          "color": "#2ecc71",
-          "strikethrough": false,
-          "underline": false,
-          "backgroundColor": "transparent",
-          "bold": true,
-          "italic": false
-        },
-        {
-          "tag": "?",
-          "color": "#3498db",
-          "strikethrough": false,
-          "underline": false,
-          "backgroundColor": "transparent",
-          "bold": false,
-          "italic": true
-        },
-        {
-          "tag": "!",
-          "color": "#e74c3c",
-          "strikethrough": false,
-          "underline": false,
-          "backgroundColor": "transparent",
-          "bold": true,
-          "italic": false
-        },
-        {
-          "tag": "'",
-          "color": "#f39c12",
-          "strikethrough": false,
-          "underline": false,
-          "backgroundColor": "transparent",
-          "bold": false,
-          "italic": true
-        }
-      ]
-    }
+    ```jsonc
+    "better-comments.tags": [
+      { "tag": "!",  "color": "#FF2D00", "strikethrough": false, "bold": false, "italic": false, "backgroundColor": "transparent" },
+      { "tag": "?",  "color": "#3498DB", "strikethrough": false, "bold": false, "italic": false, "backgroundColor": "transparent" },
+      { "tag": "//", "color": "#474747", "strikethrough": true,  "bold": false, "italic": false, "backgroundColor": "transparent" },
+      { "tag": "'",  "color": "#FF8C00", "strikethrough": false, "bold": false, "italic": false, "backgroundColor": "transparent" },
+      { "tag": "*",  "color": "#98C379", "strikethrough": false, "bold": false, "italic": false, "backgroundColor": "transparent" }
+    ]
     ```
 
     Con esto, los comentarios del proyecto se mostrarán con colores que facilitan la lectura y comprensión del código fuente.

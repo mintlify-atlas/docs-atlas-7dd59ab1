@@ -1,10 +1,10 @@
 ---
-title: "Arquitectura CSS: estilos globales y hojas de estilo por página"
+title: "Arquitectura CSS del sitio: archivos globales y por página"
 sidebarTitle: "Arquitectura CSS"
 description: "Cómo está organizado el CSS del sitio — un archivo global con tokens y layout compartido, y hojas de estilo específicas por cada página."
 ---
 
-El proyecto organiza los estilos en **dos capas complementarias**: un archivo compartido (`styles.css`) que define los design tokens, el header, el footer y el layout base que se repite en todas las páginas, y una hoja de estilo dedicada por cada subpágina que contiene únicamente los estilos propios de ese contenido. Esta separación evita la duplicación de reglas comunes y mantiene cada archivo enfocado en una sola responsabilidad.
+El proyecto organiza los estilos en **dos capas complementarias**: un archivo compartido (`styles.css`) que define los design tokens, el header, el footer y el layout base de la página de inicio, y una hoja de estilo dedicada por cada subpágina que contiene los estilos propios de ese contenido. Cada hoja de estilo de subpágina replica internamente los tokens globales y los estilos del header y footer compartidos, lo que permite cargarla de forma independiente. Esta separación mantiene cada archivo enfocado en una sola responsabilidad y evita dependencias de carga obligatoria entre hojas.
 
 ## Organización de archivos CSS
 
@@ -12,13 +12,13 @@ El proyecto organiza los estilos en **dos capas complementarias**: un archivo co
 |---|---|
 | `css/styles.css` | Tokens globales, header, footer, layout base (índice) |
 | `css/nosotros.css` | Estilos de la página Nosotros |
-| `css/noticias.css` | Estilos de la página Noticias |
-| `css/recursos.css` | Estilos de la página Recursos y Contacto |
-| `css/contacto.css` | Estilos adicionales de la página Contacto |
+| `css/noticias.css` | Estilos de la página Noticias (incluye tokens y header/footer propios) |
+| `css/recursos.css` | Estilos de la página Recursos; también cargado por Contacto para el directorio de personal |
+| `css/contacto.css` | Estilos del formulario, datos de contacto y mapa de la página Contacto |
 
 ## Estrategia de carga
 
-Cada página carga primero `styles.css` para garantizar que los tokens y los componentes compartidos (header, footer) estén disponibles antes de aplicar los estilos específicos. La página de inicio solo necesita `styles.css`, mientras que el resto de las páginas encadena su hoja propia inmediatamente después.
+La página de inicio carga únicamente `styles.css`. Las páginas internas (nosotros, noticias, recursos) cargan su hoja específica directamente, ya que cada archivo replica internamente los tokens y los estilos de header y footer. La página de contacto es la única que encadena dos hojas propias: `contacto.css` (formulario y mapa) y `recursos.css` (directorio de personal, que también aparece en esa vista).
 
 <CodeGroup>
 
@@ -43,6 +43,30 @@ Cada página carga primero `styles.css` para garantizar que los tokens y los com
 />
 <link rel="stylesheet" href="../css/styles.css" />
 <link rel="stylesheet" href="../css/nosotros.css" />
+```
+
+```html pages/noticias.html
+<!-- * — Configuración visual base -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="../css/noticias.css" />
+```
+
+```html pages/contacto.html
+<!-- * — Configuración visual base -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/contacto.css" />
+<link rel="stylesheet" href="../css/recursos.css" />
 ```
 
 </CodeGroup>
